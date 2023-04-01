@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des artistes{% endblock %}
+
+{% block body %}
+    <h1>Liste des artistes</h1>
+
+    <ul>
+        {% for artist in artists %}
+            <li>
+                {{ artist.name }}
+                <form method="post" action="{{ path('artist_delete', {'id': artist.id}) }}" onsubmit="return confirm('Are you sure you want to delete this artist?');">
+                    <input type="hidden" name="_method" value="POST">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artist.id) }}">
+                    <button class="btn btn-danger">Supprimer</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

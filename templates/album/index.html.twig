@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des albums{% endblock %}
+
+{% block body %}
+    <h1>Liste des albums</h1>
+
+    <ul>
+        {% for album in albums %}
+            <li>
+                {{ album.title }}
+                <form method="post" action="{{ path('album_delete', {'id': album.id}) }}" onsubmit="return confirm('Are you sure you want to delete this album?');">
+                    <input type="hidden" name="_method" value="POST">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ album.id) }}">
+                    <button class="btn btn-danger">Supprimer</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {# Affichez la pagination ici #}
+{% endblock %}
+
